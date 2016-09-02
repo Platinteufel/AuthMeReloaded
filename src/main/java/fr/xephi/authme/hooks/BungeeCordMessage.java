@@ -39,7 +39,7 @@ public class BungeeCordMessage implements PluginMessageListener {
             final String[] args = str.split(";");
             final String act = args[0];
             final String name = args[1];
-            bukkitService.runTaskAsynchronously(new Runnable() {
+            bukkitService.runTask(new Runnable() {
                 @Override
                 public void run() {
                     PlayerAuth auth = dataSource.getAuth(name);

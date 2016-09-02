@@ -144,7 +144,7 @@ public class AsynchronousJoin implements AsynchronousProcess {
                 playerCache.removePlayer(name);
                 if (auth != null && auth.getIp().equals(ip)) {
                     service.send(player, MessageKey.SESSION_RECONNECTION);
-                    bukkitService.runTaskAsynchronously(new Runnable() {
+                    bukkitService.runTask(new Runnable() {
                         @Override
                         public void run() {
                             asynchronousLogin.login(player, "dontneed", true);

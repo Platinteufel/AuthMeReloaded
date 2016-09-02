@@ -135,6 +135,6 @@ public class Management {
     }
 
     private void runTask(Runnable runnable) {
-        bukkitService.runTaskAsynchronously(runnable);
+        bukkitService.runTask(runnable);
     }
 }

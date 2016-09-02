@@ -55,7 +55,7 @@ public class RegisterAdminCommand implements ExecutableCommand {
             return;
         }
 
-        bukkitService.runTaskAsynchronously(new Runnable() {
+        bukkitService.runTask(new Runnable() {
 
             @Override
             public void run() {
