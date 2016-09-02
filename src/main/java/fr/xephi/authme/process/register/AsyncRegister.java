@@ -171,7 +171,7 @@ public class AsyncRegister implements AsynchronousProcess {
         }
 
         if (!service.getProperty(RegistrationSettings.FORCE_LOGIN_AFTER_REGISTER) && autoLogin) {
-            bukkitService.runTasky(new Runnable(){
+            bukkitService.runTask(new Runnable(){
                 @Override
                 public void run() {
                     asynchronousLogin.login(player, "dontneed", true);
