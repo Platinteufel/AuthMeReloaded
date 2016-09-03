@@ -24,7 +24,7 @@ public class ProtectInventoryEvent extends CustomEvent implements Cancellable {
      * @param player The player
      */
     public ProtectInventoryEvent(Player player) {
-        super(true);
+        super(false);
         this.player = player;
         this.storedInventory = player.getInventory().getContents();
         this.storedArmor = player.getInventory().getArmorContents();

@@ -21,7 +21,7 @@ public class AuthMeAsyncPreLoginEvent extends CustomEvent {
      * @param player The player
      */
     public AuthMeAsyncPreLoginEvent(Player player) {
-        super(true);
+        super(false);
         this.player = player;
     }
 
