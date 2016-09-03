@@ -80,7 +80,7 @@ public final class TestHelper {
      */
     public static void runInnerRunnable(BukkitService service) {
         ArgumentCaptor<Runnable> captor = ArgumentCaptor.forClass(Runnable.class);
-        verify(service).runTaskAsynchronously(captor.capture());
+        verify(service).runTask(captor.capture());
         Runnable runnable = captor.getValue();
         runnable.run();
     }

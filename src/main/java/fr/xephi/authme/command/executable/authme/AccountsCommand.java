@@ -32,7 +32,7 @@ public class AccountsCommand implements ExecutableCommand {
 
         // Assumption: a player name cannot contain '.'
         if (playerName.contains(".")) {
-            bukkitService.runTaskAsynchronously(new Runnable() {
+            bukkitService.runTask(new Runnable() {
                 @Override
                 public void run() {
                     List<String> accountList = dataSource.getAllAuthsByIp(playerName);
@@ -46,7 +46,7 @@ public class AccountsCommand implements ExecutableCommand {
                 }
             });
         } else {
-            bukkitService.runTaskAsynchronously(new Runnable() {
+            bukkitService.runTask(new Runnable() {
                 @Override
                 public void run() {
                     PlayerAuth auth = dataSource.getAuth(playerName.toLowerCase());
