@@ -1,13 +1,13 @@
 package fr.xephi.authme.settings.properties;
 
+import com.github.authme.configme.Comment;
+import com.github.authme.configme.SettingsHolder;
+import com.github.authme.configme.properties.Property;
 import fr.xephi.authme.output.LogLevel;
-import fr.xephi.authme.settings.domain.Comment;
-import fr.xephi.authme.settings.domain.Property;
-import fr.xephi.authme.settings.domain.SettingsClass;
 
-import static fr.xephi.authme.settings.domain.Property.newProperty;
+import static com.github.authme.configme.properties.PropertyInitializer.newProperty;
 
-public class PluginSettings implements SettingsClass {
+public class PluginSettings implements SettingsHolder {
 
     @Comment("The name shown in the help messages")
     public static final Property<String> HELP_HEADER =
@@ -45,8 +45,8 @@ public class PluginSettings implements SettingsClass {
         newProperty("settings.messagesLanguage", "en");
 
     @Comment({
-        "Take care with this option; if you don't want",
-        "to use Vault and group switching of AuthMe",
+        "Take care with this option; if you want",
+        "to use group switching of AuthMe",
         "for unloggedIn players, set this setting to true.",
         "Default is false."
     })

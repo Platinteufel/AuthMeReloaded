@@ -81,8 +81,17 @@ public class LimboCache {
             PlayerData data = cache.get(lowerName);
             player.setOp(data.isOperator());
             player.setAllowFlight(data.isCanFly());
-            player.setWalkSpeed(data.getWalkSpeed());
-            player.setFlySpeed(data.getFlySpeed());
+            float walkSpeed = data.getWalkSpeed();
+            float flySpeed = data.getFlySpeed();
+            // Reset the speed value if it was 0
+            if(walkSpeed == 0f) {
+                walkSpeed = 0.2f;
+            }
+            if(flySpeed == 0f) {
+                flySpeed = 0.2f;
+            }
+            player.setWalkSpeed(walkSpeed);
+            player.setFlySpeed(flySpeed);
             restoreGroup(player, data.getGroup());
             data.clearTasks();
         }
@@ -147,10 +156,9 @@ public class LimboCache {
     }
 
     private void restoreGroup(Player player, String group) {
-        if (!settings.getProperty(PluginSettings.ENABLE_PERMISSION_CHECK)
-            || !permissionsManager.hasGroupSupport() || StringUtils.isEmpty(group)) {
-            return;
+        if (!StringUtils.isEmpty(group) && permissionsManager.hasGroupSupport()
+            && settings.getProperty(PluginSettings.ENABLE_PERMISSION_CHECK)) {
+            permissionsManager.setGroup(player, group);
         }
-        permissionsManager.setGroup(player, group);
     }
 }

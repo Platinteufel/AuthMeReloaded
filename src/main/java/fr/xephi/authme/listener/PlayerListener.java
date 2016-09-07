@@ -145,10 +145,6 @@ public class PlayerListener implements Listener {
         if (!settings.getProperty(RestrictionSettings.ALLOW_UNAUTHED_MOVEMENT)) {
             // "cancel" the event
             event.setTo(event.getFrom());
-            if (settings.getProperty(RestrictionSettings.REMOVE_SPEED)) {
-                player.setFlySpeed(0.0f);
-                player.setWalkSpeed(0.0f);
-            }
             return;
         }
 
@@ -248,6 +244,10 @@ public class PlayerListener implements Listener {
 
         if (settings.getProperty(RegistrationSettings.REMOVE_LEAVE_MESSAGE)) {
             event.setQuitMessage(null);
+        } else if (settings.getProperty(RegistrationSettings.REMOVE_UNLOGGED_LEAVE_MESSAGE)) {
+            if(listenerService.shouldCancelEvent(event)) {
+                event.setQuitMessage(null);
+            }
         }
 
         if (antiBot.wasPlayerKicked(player.getName())) {

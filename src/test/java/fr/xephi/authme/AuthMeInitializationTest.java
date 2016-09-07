@@ -2,6 +2,7 @@ package fr.xephi.authme;
 
 import ch.jalu.injector.Injector;
 import ch.jalu.injector.InjectorBuilder;
+import com.github.authme.configme.resource.PropertyResource;
 import com.google.common.io.Files;
 import fr.xephi.authme.api.NewAPI;
 import fr.xephi.authme.command.CommandHandler;
@@ -14,6 +15,7 @@ import fr.xephi.authme.process.login.ProcessSyncPlayerLogin;
 import fr.xephi.authme.security.PasswordSecurity;
 import fr.xephi.authme.settings.Settings;
 import fr.xephi.authme.task.purge.PurgeService;
+import fr.xephi.authme.util.BukkitService;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -34,7 +36,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import static fr.xephi.authme.settings.TestSettingsMigrationServices.alwaysFulfilled;
-import static fr.xephi.authme.settings.properties.SettingsFieldRetriever.getAllPropertyFields;
+import static fr.xephi.authme.settings.properties.AuthMeSettingsRetriever.getAllPropertyFields;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -92,11 +94,8 @@ public class AuthMeInitializationTest {
     @Test
     public void shouldInitializeAllServices() {
         // given
-        Settings settings = new Settings(settingsFile, dataFolder, getAllPropertyFields(), alwaysFulfilled());
-
-        // TODO ljacqu 20160619: At some point setting the "plugin" field should no longer be necessary
-        // We only require it right now because of usages of AuthMe#getInstance()
-        ReflectionTestUtils.setField(AuthMe.class, null, "plugin", authMe);
+        Settings settings =
+            new Settings(dataFolder, mock(PropertyResource.class), alwaysFulfilled(), getAllPropertyFields());
 
         Injector injector = new InjectorBuilder().addDefaultHandlers("fr.xephi.authme").create();
         injector.provide(DataFolder.class, dataFolder);
@@ -106,6 +105,7 @@ public class AuthMeInitializationTest {
         injector.register(AuthMe.class, authMe);
         injector.register(Settings.class, settings);
         injector.register(DataSource.class, mock(DataSource.class));
+        injector.register(BukkitService.class, mock(BukkitService.class));
 
         // when
         authMe.instantiateServices(injector);
